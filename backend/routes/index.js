@@ -1,5 +1,17 @@
 const express = require('express');
 const router = express.Router();
+// const cors = require('cors');
+// app.use(cors());
+
+// const cors = require('cors');
+
+// // Allow only the frontend origin
+// app.use(cors({
+//   origin: 'http://192.168.49.2:30008',
+//   credentials: true
+// }));
+
+
 
 // Import all route files
 const authRoutes = require('./auth');

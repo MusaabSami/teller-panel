@@ -1,10 +1,25 @@
 const express = require('express');
-const cors = require('cors');
+
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
 const path = require('path');
+
+const app = express();
+
+// const cors = require('cors');
+// app.use(cors());
+
+const cors = require('cors');
+
+// Allow only the frontend origin
+app.use(cors({
+  origin: 'http://192.168.49.2:30008',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Import configuration
 const config = require('./config/config');
@@ -15,7 +30,7 @@ const routes = require('./routes');
 // Import error handler
 const errorHandler = require('./middleware/errorHandler');
 
-const app = express();
+
 
 // Database connection
 mongoose.connect(config.mongoUri)
@@ -39,14 +54,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // CORS configuration
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL 
-    : 'http://localhost:5173',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// app.use(cors({
+//   origin: process.env.NODE_ENV === 'production' 
+//     ? process.env.FRONTEND_URL 
+//     : 'http://localhost:5173',
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));

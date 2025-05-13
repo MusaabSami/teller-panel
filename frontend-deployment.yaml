@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bms-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bms-frontend
+  template:
+    metadata:
+      labels:
+        app: bms-frontend
+    spec:
+      containers:
+        - name: bms-frontend
+          image: musaabsami/bms-frontend:latest
+          ports:
+            - containerPort: 80
